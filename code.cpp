@@ -29,43 +29,45 @@ int main() {
 
     //Printing initial queue
     cout << "Initial queue:" << endl;
-    int count = 1;
+    int lanecount = 1;
     for (auto it : lanes) {
-        cout << "Lane " << count++ << endl;
+        cout << "Lane " << lanecount++ << endl;
         for (auto it2 : it) {
             it2.print();
         }
     }
 
-    count = 1;
-    /*
+    lanecount = 1;
     for (int i = 0; i < 20; i++) {
-        int chances = rand() % 100 + 1;
-        cout << "Time: " << count << "\nOperation: ";
+        for (auto cars : lanes) {
+            int chances = rand() % 100 + 1;
+            cout << "Time: " << i + 1 << endl;
 
-        if (chances <= LEAVE_PROB) { //Pays toll and leaves
-            cout << "Car paid: ";
-            cars[0].print();
-            cars.pop_front();
-        } else if (chances <= LEAVE_PROB + JOIN_PROB) { //New car joins
-            cout << "Joined lane: ";
-            Car newcar;
-            cars.push_back(newcar);
-            newcar.print();
-        } else { //Rear car shifts lanes
-
+            if (chances <= LEAVE_PROB) { //Pays toll and leaves
+                cout << "Lane: " << lanecount << " Car paid: ";
+                cars[0].print();
+                cars.pop_front();
+            } else if (chances <= LEAVE_PROB + JOIN_PROB) { //New car joins
+                cout << "Lane: " << lanecount << " Joined lane: ";
+                Car newcar;
+                cars.push_back(newcar);
+                newcar.print();
+            } else { //Rear car shifts lanes
+                cars.pop_back();
+            }
+        
+            lanecount++;
         }
         
         //Queue printing
-        cout << "Queue:" << endl;
-        for (int i = 0; i < lane1.size(); i++) {
-            cout << "    ";
-            cars[i].print();
+        lanecount = 1;
+        for (auto cars : lanes) {
+            cout << "Lane " << lanecount++ << " Queue:" << endl;
+            for (int i = 0; i < cars.size(); i++) {
+                cout << "    ";
+                cars[i].print();
+            }
+            cout << endl;
         }
-        cout << endl;
-    
-        count++;
     }
-    cout << "Empty" << endl;
-    */
 }
