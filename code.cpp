@@ -58,12 +58,14 @@ int main() {
                 lanes[currentlane].push_back(newcar);
                 newcar.print();
             } else if (!lanes[currentlane].empty()) { //Rear car shifts lanes
+                //Outputs the lane shift
                 cout << "Lane: " << lanecount << " Switched: ";
                 Car lastcar = lanes[currentlane].back();
                 lastcar.print();
 
-                int randomLane = lanecount; //Makes sure its not the same lane switched to
-                while (randomLane == lanecount) {
+                //Chooses a lane to shift to
+                int randomLane = lanecount; 
+                while (randomLane == lanecount) { //Makes sure its not the same lane switched to
                     randomLane = rand() % 4 + 1;
                 }
 
