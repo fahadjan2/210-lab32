@@ -7,38 +7,49 @@
 using namespace std;
 
 const int INIT_SIZE = 2;
+const int LANES_SIZE = 4;
+const int LEAVE_PROB = 46;
+const int JOIN_PROB = 39;
+const int LANE_PROB = 15;
 
 int main() {
     srand(time(0));
-    deque<Car> cars;
+    deque<deque<Car>> lanes;
 
+    //Populating each lane with 2 cars
     cout << "Initial queue:" << endl;
-    for (int i = 0; i < INIT_SIZE; i++) {
-        Car newCar;
-        cars.push_back(newCar);
-        newCar.print();
+    for (int i = 0; i < LANES_SIZE; i++) {
+        deque<Car> car;
+        for (int i = 0; i < INIT_SIZE; i++) {
+            Car newCar;
+            car.push_back(newCar);
+            newCar.print();
+        }
+        lanes.push_back(car);
     }
     cout << endl;
 
     int count = 1;
-    while (!cars.empty()) {
+    for (int i = 0; i < 20; i++) {
         int chances = rand() % 100 + 1;
         cout << "Time: " << count << "\nOperation: ";
 
-        if (chances <= 55) { //Pays toll and leaves
+        if (chances <= LEAVE_PROB) { //Pays toll and leaves
             cout << "Car paid: ";
             cars[0].print();
             cars.pop_front();
-        } else { //New car joins
+        } else if (chances <= LEAVE_PROB + JOIN_PROB) { //New car joins
             cout << "Joined lane: ";
             Car newcar;
             cars.push_back(newcar);
             newcar.print();
+        } else { //Rear car shifts lanes
+
         }
         
         //Queue printing
         cout << "Queue:" << endl;
-        for (int i = 0; i < cars.size(); i++) {
+        for (int i = 0; i < lane1.size(); i++) {
             cout << "    ";
             cars[i].print();
         }
