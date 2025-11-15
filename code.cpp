@@ -22,7 +22,6 @@ int main() {
         for (int i = 0; i < INIT_SIZE; i++) {
             Car newCar;
             car.push_back(newCar);
-            newCar.print();
         }
         lanes.push_back(car);
     }
@@ -30,13 +29,15 @@ int main() {
 
     //Printing initial queue
     cout << "Initial queue:" << endl;
+    int count = 1;
     for (auto it : lanes) {
+        cout << "Lane " << count++ << endl;
         for (auto it2 : it) {
             it2.print();
         }
     }
 
-    int count = 1;
+    count = 1;
     /*
     for (int i = 0; i < 20; i++) {
         int chances = rand() % 100 + 1;
