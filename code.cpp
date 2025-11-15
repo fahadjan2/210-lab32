@@ -17,7 +17,6 @@ int main() {
     deque<deque<Car>> lanes;
 
     //Populating each lane with 2 cars
-    cout << "Initial queue:" << endl;
     for (int i = 0; i < LANES_SIZE; i++) {
         deque<Car> car;
         for (int i = 0; i < INIT_SIZE; i++) {
@@ -29,7 +28,16 @@ int main() {
     }
     cout << endl;
 
+    //Printing initial queue
+    cout << "Initial queue:" << endl;
+    for (auto it : lanes) {
+        for (auto it2 : it) {
+            it2.print();
+        }
+    }
+
     int count = 1;
+    /*
     for (int i = 0; i < 20; i++) {
         int chances = rand() % 100 + 1;
         cout << "Time: " << count << "\nOperation: ";
@@ -58,4 +66,5 @@ int main() {
         count++;
     }
     cout << "Empty" << endl;
+    */
 }
