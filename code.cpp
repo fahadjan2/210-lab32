@@ -42,17 +42,22 @@ int main() {
         lanecount = 1;
         for (int currentlane = 0; currentlane < lanes.size(); currentlane++) {
             int chances = rand() % 100 + 1;
+            bool join = false;
+            if (lanes[currentlane].empty()) { //If lane is empty
+                if (chances <= 50 ) //50/50 on join
+                    join = true;
+            }
 
             if (chances <= LEAVE_PROB && !lanes[currentlane].empty()) { //Pays toll and leaves
                 cout << "Lane: " << lanecount << " Paid: ";
                 lanes[currentlane][0].print();
                 lanes[currentlane].pop_front();
-            } else if (chances <= LEAVE_PROB + JOIN_PROB) { //New car joins
+            } else if (chances <= (LEAVE_PROB + JOIN_PROB) || join == true) { //New car joins
                 cout << "Lane: " << lanecount << " Joined lane: ";
                 Car newcar;
                 lanes[currentlane].push_back(newcar);
                 newcar.print();
-            } else { //Rear car shifts lanes
+            } else if (!lanes[currentlane].empty()) { //Rear car shifts lanes
                 cout << "Lane: " << lanecount << " Switched: ";
                 Car lastcar = lanes[currentlane].back();
                 lastcar.print();
@@ -75,7 +80,7 @@ int main() {
         for (auto cars : lanes) {
             cout << "Lane " << lanecount++ << " Queue:" << endl;
             if (cars.empty()) {
-                cout << "    Empty";
+                cout << "    Empty" << endl;
             }
             for (int i = 0; i < cars.size(); i++) {
                 cout << "    ";
