@@ -25,7 +25,6 @@ int main() {
         }
         lanes.push_back(car);
     }
-    cout << endl;
 
     //Printing initial queue
     cout << "Initial queue:" << endl;
@@ -36,24 +35,36 @@ int main() {
             it2.print();
         }
     }
+    cout << endl;
 
-    lanecount = 1;
     for (int i = 0; i < 20; i++) {
-        for (auto cars : lanes) {
+        cout << "Time: " << i + 1 << endl;
+        lanecount = 1;
+        for (int currentlane = 0; currentlane < lanes.size(); currentlane++) {
             int chances = rand() % 100 + 1;
-            cout << "Time: " << i + 1 << endl;
 
-            if (chances <= LEAVE_PROB) { //Pays toll and leaves
-                cout << "Lane: " << lanecount << " Car paid: ";
-                cars[0].print();
-                cars.pop_front();
+            if (chances <= LEAVE_PROB && !lanes[currentlane].empty()) { //Pays toll and leaves
+                cout << "Lane: " << lanecount << " Paid: ";
+                lanes[currentlane][0].print();
+                lanes[currentlane].pop_front();
             } else if (chances <= LEAVE_PROB + JOIN_PROB) { //New car joins
                 cout << "Lane: " << lanecount << " Joined lane: ";
                 Car newcar;
-                cars.push_back(newcar);
+                lanes[currentlane].push_back(newcar);
                 newcar.print();
             } else { //Rear car shifts lanes
-                cars.pop_back();
+                cout << "Lane: " << lanecount << " Switched: ";
+                Car lastcar = lanes[currentlane].back();
+                lastcar.print();
+
+                int randomLane = lanecount; //Makes sure its not the same lane switched to
+                while (randomLane == lanecount) {
+                    randomLane = rand() % 4 + 1;
+                }
+
+                //Switches lane
+                lanes[randomLane - 1].push_back(lastcar);
+                lanes[currentlane].pop_back();
             }
         
             lanecount++;
@@ -63,6 +74,9 @@ int main() {
         lanecount = 1;
         for (auto cars : lanes) {
             cout << "Lane " << lanecount++ << " Queue:" << endl;
+            if (cars.empty()) {
+                cout << "    Empty";
+            }
             for (int i = 0; i < cars.size(); i++) {
                 cout << "    ";
                 cars[i].print();
